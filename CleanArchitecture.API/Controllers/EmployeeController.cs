@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Services;
 using CleanArchitecture.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.Xml;
 
 namespace CleanArchitecture.API.Controllers
 {
@@ -69,6 +70,40 @@ namespace CleanArchitecture.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error in retrieving employee record from Database.");
             }
         }
+        [HttpPost("AddEmployeeUsingSP")]
+        public ActionResult<EmployeeDTO> AddEmployeeUsingSP(EmployeeRequest employeeRequest) 
+        {
+            try 
+            {
+                if (employeeRequest == null)
+                    return BadRequest();
+
+                var createdEmployee = employeeService.AddEmployeeUsingSP(employeeRequest);
+                return CreatedAtAction(nameof(GetEmployeeById), new { Id = createdEmployee.EmployeeId }, createdEmployee);
+            }
+            catch(Exception ex) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee record.");
+            }
+        }
+
+        [HttpPost("AddEmployeeUsingSPAsync")]
+        public async Task<ActionResult<EmployeeDTO>> AddEmployeeUsingSPAsync(EmployeeRequest employeeRequest)
+        {
+            try
+            {
+                if (employeeRequest == null)
+                    return BadRequest();
+
+                var createdEmployee = await employeeService.AddEmployeeUsingSPAsync(employeeRequest);
+                return CreatedAtAction(nameof(GetEmployeeById), new { Id = createdEmployee.EmployeeId }, createdEmployee);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee record.");
+            }
+        }
+
         #endregion
     }
 }

@@ -13,5 +13,7 @@ namespace CleanArchitecture.Application.Services
         Task<EmployeeDTO> AddEmployeeAsync(EmployeeRequest employeeRequest);
         Task<EmployeeDTO> GetEmployeeByIdAsync(int id);
         EmployeeDTO GetEmployeeByIdUsingSP(int id);
+        EmployeeDTO AddEmployeeUsingSP(EmployeeRequest employeeRequest);
+        Task<EmployeeDTO> AddEmployeeUsingSPAsync(EmployeeRequest employeeRequest);
     }
 }

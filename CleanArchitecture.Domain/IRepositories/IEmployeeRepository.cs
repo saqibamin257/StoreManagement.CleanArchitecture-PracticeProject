@@ -17,6 +17,8 @@ namespace CleanArchitecture.Domain.IRepositories
         
         #region Stored Procedure Methods
         Employee GetEmployeeByIdUsingSP(int id);
+        Employee CreateEmployeeUsingSP(Employee employee);
+        Task<Employee> CreateEmployeeUsingSPAsync(Employee employee);
         #endregion
     }
 }

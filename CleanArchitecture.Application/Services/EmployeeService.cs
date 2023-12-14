@@ -35,10 +35,28 @@ namespace CleanArchitecture.Application.Services
             await employeeRepository.CreateEmployeeAsync(employee);
             return mapper.Map<EmployeeDTO>(employee);
         }
+
+
+        #region Stored Procedure Methods
         public EmployeeDTO GetEmployeeByIdUsingSP(int id) 
         {
             var employee = employeeRepository.GetEmployeeByIdUsingSP(id);
             return mapper.Map<EmployeeDTO>(employee);
         }
+        public EmployeeDTO AddEmployeeUsingSP(EmployeeRequest employeeRequest) 
+        {
+            var employee=mapper.Map<Employee>(employeeRequest);
+            employeeRepository.CreateEmployeeUsingSP(employee);
+            return mapper.Map<EmployeeDTO>(employee);
+        }
+
+        public async Task<EmployeeDTO> AddEmployeeUsingSPAsync(EmployeeRequest employeeRequest)
+        {
+            var employee = mapper.Map<Employee>(employeeRequest);
+                await employeeRepository.CreateEmployeeUsingSPAsync(employee);
+                return mapper.Map<EmployeeDTO>(employee);
+        }        
+        #endregion
+
     }
 }
